@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-i18n="doc_title">ФОРМА — фитнес-студия</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #14201C;
+    --surface: #1C2B25;
+    --surface-2: #223328;
+    --line: #2E4438;
+    --accent: #C97C3D;
+    --accent-soft: #E3A468;
+    --pop: #D8EB5C;
+    --text: #F4F1E8;
+    --muted: #93A69B;
+    --radius: 4px;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background:
+      radial-gradient(ellipse at top left, rgba(201,124,61,0.08), transparent 45%),
+      var(--bg);
+    color:var(--text);
+    font-family:'Inter', sans-serif;
+    line-height:1.5;
+    overflow-x:hidden;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important; }
+  }
+
+  .wrap{ max-width:1120px; margin:0 auto; padding:0 28px; }
+
+  .mono{ font-family:'JetBrains Mono', monospace; }
+
+  .display{
+    font-family:'Bebas Neue', sans-serif;
+    letter-spacing:0.01em;
+    line-height:0.92;
+    text-transform:uppercase;
+  }
+
+  a{ color:inherit; text-decoration:none; }
+  button{ font-family:inherit; cursor:pointer; }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(20,32,28,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 28px;
+    max-width:1120px; margin:0 auto;
+    gap:20px;
+  }
+  .logo{
+    font-family:'Bebas Neue', sans-serif;
+    font-size:26px; letter-spacing:0.06em;
+    flex-shrink:0;
+  }
+  .logo span{ color:var(--accent); }
+  .nav-links{ display:flex; gap:32px; }
+  .nav-links a{
+    font-size:14px; font-weight:600; color:var(--muted);
+    transition:color 0.2s ease;
+  }
+  .nav-links a:hover, .nav-links a:focus-visible{ color:var(--text); }
+
+  .nav-right{ display:flex; align-items:center; gap:18px; flex-shrink:0; }
+
+  .lang-switch{
+    display:flex; align-items:center; gap:2px;
+    border:1px solid var(--line); border-radius:99px;
+    padding:3px;
+  }
+  .lang-switch button{
+    background:none; border:none; color:var(--muted);
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px; font-weight:700; letter-spacing:0.03em;
+    padding:6px 11px; border-radius:99px;
+    transition:background 0.2s ease, color 0.2s ease;
+  }
+  .lang-switch button:hover{ color:var(--text); }
+  .lang-switch button.active{ background:var(--accent); color:#14201C; }
+  .lang-switch button:focus-visible{ outline:2px solid var(--pop); outline-offset:2px; }
+
+  .nav-cta{
+    background:var(--accent); color:#14201C; font-weight:700; font-size:14px;
+    padding:11px 20px; border-radius:var(--radius);
+    transition:background 0.2s ease, transform 0.2s ease;
+    white-space:nowrap;
+  }
+  .nav-cta:hover, .nav-cta:focus-visible{ background:var(--accent-soft); transform:translateY(-1px); }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:88px 0 64px;
+    position:relative;
+  }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:13px; color:var(--accent-soft);
+    letter-spacing:0.08em; text-transform:uppercase;
+    margin-bottom:22px;
+  }
+  .eyebrow::before{
+    content:''; width:8px; height:8px; background:var(--pop);
+    border-radius:50%;
+    animation:pulse-dot 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse-dot{
+    0%,100%{ opacity:1; transform:scale(1); }
+    50%{ opacity:0.4; transform:scale(0.7); }
+  }
+  h1{
+    font-size:clamp(48px, 8vw, 96px);
+    max-width:16ch;
+  }
+  h1 em{
+    font-style:normal;
+    color:var(--accent);
+  }
+  .hero-sub{
+    margin-top:26px;
+    max-width:46ch;
+    font-size:18px;
+    color:var(--muted);
+  }
+  .hero-ctas{
+    margin-top:36px;
+    display:flex; align-items:center; gap:20px; flex-wrap:wrap;
+  }
+  .btn-primary{
+    background:var(--accent); color:#14201C; font-weight:700; font-size:15px;
+    padding:15px 30px; border-radius:var(--radius);
+    transition:background 0.2s ease, transform 0.2s ease;
+    display:inline-block;
+  }
+  .btn-primary:hover, .btn-primary:focus-visible{ background:var(--accent-soft); transform:translateY(-2px); }
+  .btn-ghost{
+    font-weight:600; font-size:15px; color:var(--text);
+    border-bottom:1px solid var(--line);
+    padding-bottom:2px;
+    transition:border-color 0.2s ease, color 0.2s ease;
+  }
+  .btn-ghost:hover, .btn-ghost:focus-visible{ border-color:var(--accent-soft); color:var(--accent-soft); }
+
+  /* pulse line */
+  .pulse-wrap{
+    margin-top:64px;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    padding:22px 0;
+    overflow:hidden;
+  }
+  .pulse-wrap svg{ width:100%; height:60px; display:block; }
+  .pulse-line{
+    fill:none; stroke:var(--accent); stroke-width:2.5;
+    stroke-dasharray:1400; stroke-dashoffset:1400;
+    animation:draw-pulse 2.4s ease-out forwards 0.3s;
+  }
+  @keyframes draw-pulse{ to{ stroke-dashoffset:0; } }
+
+  /* ---------- HOW IT WORKS ---------- */
+  .how{ padding:80px 0; }
+  .how-head{ max-width:60ch; margin-bottom:52px; }
+  .how-head h2{ font-size:clamp(32px,4.5vw,44px); }
+  .how-head p{ margin-top:14px; color:var(--muted); font-size:16px; max-width:52ch; }
+
+  .plates-legend{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:24px;
+  }
+  .plate-card{
+    border:1px solid var(--line); border-radius:var(--radius);
+    padding:28px 24px; background:var(--surface);
+  }
+  .plate-card h3{ font-size:15px; font-weight:700; margin-bottom:10px; }
+  .plate-card p{ font-size:14px; color:var(--muted); }
+  .barbell{ display:flex; align-items:center; gap:2px; margin-bottom:18px; height:34px; }
+  .bar{ height:4px; background:var(--line); flex:1; min-width:12px; }
+  .plate{ width:14px; height:34px; border-radius:2px; background:var(--accent); flex-shrink:0; }
+  .plate.dim{ background:var(--line); }
+
+  /* ---------- PRICING ---------- */
+  .pricing{ padding:80px 0 100px; }
+  .pricing-head{ text-align:center; max-width:56ch; margin:0 auto 56px; }
+  .pricing-head h2{ font-size:clamp(32px,4.5vw,48px); }
+  .pricing-head p{ margin-top:14px; color:var(--muted); font-size:16px; }
+
+  .plans{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:24px;
+    align-items:stretch;
+  }
+  .plan{
+    border:1px solid var(--line); border-radius:var(--radius);
+    background:var(--surface);
+    padding:32px 28px;
+    display:flex; flex-direction:column;
+    position:relative;
+    transition:transform 0.25s ease, border-color 0.25s ease;
+  }
+  .plan:hover{ transform:translateY(-4px); border-color:var(--accent); }
+  .plan.featured{
+    background:var(--surface-2);
+    border-color:var(--accent);
+  }
+  .plan-badge{
+    position:absolute; top:-13px; left:28px;
+    background:var(--pop); color:#14201C;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px; font-weight:700; letter-spacing:0.05em;
+    padding:5px 10px; border-radius:2px; text-transform:uppercase;
+  }
+  .plan-name{ font-size:15px; font-weight:700; letter-spacing:0.03em; text-transform:uppercase; margin-bottom:6px; }
+  .plan-tagline{ font-size:14px; color:var(--muted); margin-bottom:22px; min-height:38px; }
+
+  .plan-barbell{ display:flex; align-items:center; gap:2px; margin-bottom:20px; height:36px; }
+
+  .plan-price{ display:flex; align-items:baseline; gap:8px; margin-bottom:4px; }
+  .plan-price .amount{ font-family:'JetBrains Mono', monospace; font-size:34px; font-weight:700; }
+  .plan-price .period{ font-size:13px; color:var(--muted); }
+
+  .involvement{ margin-bottom:26px; }
+  .involvement-label{
+    display:flex; justify-content:space-between;
+    font-family:'JetBrains Mono', monospace; font-size:11px; color:var(--muted);
+    margin-bottom:6px; text-transform:uppercase; letter-spacing:0.04em;
+  }
+  .involvement-track{ height:6px; background:var(--line); border-radius:99px; overflow:hidden; }
+  .involvement-fill{
+    height:100%; background:var(--accent); border-radius:99px;
+    width:0%; transition:width 1.1s cubic-bezier(0.16,1,0.3,1);
+  }
+  .plan.featured .involvement-fill{ background:var(--pop); }
+
+  .plan-features{ list-style:none; margin-bottom:28px; flex-grow:1; }
+  .plan-features li{
+    font-size:14px; color:var(--text);
+    padding:10px 0; border-top:1px solid var(--line);
+    display:flex; gap:10px;
+  }
+  .plan-features li:first-child{ border-top:none; }
+  .plan-features li::before{ content:'—'; color:var(--accent); flex-shrink:0; }
+
+  .plan-cta{
+    text-align:center; font-weight:700; font-size:14px;
+    padding:14px; border-radius:var(--radius);
+    border:1px solid var(--accent); color:var(--accent);
+    transition:background 0.2s ease, color 0.2s ease;
+  }
+  .plan-cta:hover, .plan-cta:focus-visible{ background:var(--accent); color:#14201C; }
+  .plan.featured .plan-cta{ background:var(--pop); border-color:var(--pop); color:#14201C; }
+  .plan.featured .plan-cta:hover{ background:#e4f27f; }
+
+  /* ---------- FOOTER / CTA ---------- */
+  .cta-band{
+    border-top:1px solid var(--line);
+    padding:64px 0;
+    text-align:center;
+  }
+  .cta-band h2{ font-size:clamp(28px,4vw,40px); max-width:20ch; margin:0 auto 20px; }
+  .cta-band p{ color:var(--muted); margin-bottom:28px; }
+
+  footer{
+    border-top:1px solid var(--line);
+    padding:32px 0;
+  }
+  .foot-row{
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;
+  }
+  .foot-row p{ font-size:13px; color:var(--muted); }
+  .foot-links{ display:flex; gap:20px; }
+  .foot-links a{ font-size:13px; color:var(--muted); transition:color 0.2s ease; }
+  .foot-links a:hover, .foot-links a:focus-visible{ color:var(--text); }
+
+  /* focus visibility */
+  a:focus-visible, button:focus-visible{ outline:2px solid var(--pop); outline-offset:3px; }
+
+  .reveal{ opacity:0; transform:translateY(18px); transition:opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  @media (max-width: 860px){
+    .plates-legend, .plans{ grid-template-columns:1fr; }
+    .nav-links{ display:none; }
+    .hero{ padding-top:56px; }
+    .foot-row{ flex-direction:column; align-items:flex-start; }
+    nav{ padding:14px 20px; }
+  }
+
+  @media (max-width: 420px){
+    .nav-cta{ display:none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <div class="logo">ФОРМА<span>.</span></div>
+    <div class="nav-links">
+      <a href="#how" data-i18n="nav_format">Формат</a>
+      <a href="#pricing" data-i18n="nav_pricing">Тарифы</a>
+      <a href="#contact" data-i18n="nav_contact">Контакты</a>
+    </div>
+    <div class="nav-right">
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button type="button" data-lang="ru" class="active">RU</button>
+        <button type="button" data-lang="ua">UA</button>
+        <button type="button" data-lang="en">EN</button>
+      </div>
+      <a href="#pricing" class="nav-cta" data-i18n="nav_cta">Выбрать тариф</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <div class="eyebrow" data-i18n="eyebrow">Студия открыта — Сумы, набор идёт</div>
+      <h1 class="display" data-i18n-html="hero_title">Тренируйся <em>ровно</em><br>с той поддержкой,<br>что нужна</h1>
+      <p class="hero-sub" data-i18n="hero_sub">От полностью самостоятельных тренировок до тренера на связи каждый день — три формата с разной степенью включённости. Выбираешь не абонемент, а количество внимания к себе.</p>
+      <div class="hero-ctas">
+        <a href="#pricing" class="btn-primary" data-i18n="hero_cta_primary">Смотреть тарифы</a>
+        <a href="#how" class="btn-ghost" data-i18n="hero_cta_ghost">Как это устроено →</a>
+      </div>
+
+      <div class="pulse-wrap">
+        <svg viewBox="0 0 800 60" preserveAspectRatio="none" aria-hidden="true">
+          <path class="pulse-line" d="M0,30 L140,30 L165,10 L190,50 L215,30 L260,30 L285,45 L305,15 L325,30 L400,30 L425,8 L450,52 L475,30 L560,30 L585,20 L610,40 L635,30 L800,30" />
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="how" id="how">
+    <div class="wrap">
+      <div class="how-head reveal">
+        <h2 class="display" data-i18n="how_title">Чем больше блинов на штанге —<br>тем ближе тренер</h2>
+        <p data-i18n="how_sub">Все три формата дают доступ к студии и оборудованию. Разница в том, сколько тренерского внимания загружено в тариф — показываем это буквально, весом на грифе.</p>
+      </div>
+
+      <div class="plates-legend">
+        <div class="plate-card reveal">
+          <div class="barbell">
+            <div class="bar"></div><div class="plate"></div>
+            <div class="bar" style="flex:2"></div><div class="plate dim"></div><div class="plate dim"></div><div class="plate dim"></div><div class="plate dim"></div>
+          </div>
+          <h3 data-i18n="plate1_title">Минимум нагрузки на тренера</h3>
+          <p data-i18n="plate1_desc">Ты сам решаешь, когда прийти и что делать. Тренер рядом, но не ведёт тебя за руку.</p>
+        </div>
+        <div class="plate-card reveal">
+          <div class="barbell">
+            <div class="bar"></div><div class="plate"></div><div class="plate"></div><div class="plate"></div>
+            <div class="bar" style="flex:2"></div><div class="plate dim"></div><div class="plate dim"></div>
+          </div>
+          <h3 data-i18n="plate2_title">Общая нагрузка на группу</h3>
+          <p data-i18n="plate2_desc">Тренер ведёт занятие для всей группы: следит за техникой, задаёт темп, держит мотивацию.</p>
+        </div>
+        <div class="plate-card reveal">
+          <div class="barbell">
+            <div class="bar"></div><div class="plate"></div><div class="plate"></div><div class="plate"></div><div class="plate"></div><div class="plate"></div>
+            <div class="bar"></div>
+          </div>
+          <h3 data-i18n="plate3_title">Вся нагрузка — на тебя одного</h3>
+          <p data-i18n="plate3_desc">Тренер работает только с тобой: план, техника, питание, обратная связь каждую неделю.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pricing" id="pricing">
+    <div class="wrap">
+      <div class="pricing-head reveal">
+        <h2 class="display" data-i18n="pricing_title">Тарифы</h2>
+        <p data-i18n="pricing_sub">Меняй формат в любой момент — прогресс и история тренировок сохраняются.</p>
+      </div>
+
+      <div class="plans">
+
+        <article class="plan reveal">
+          <div class="plan-name" data-i18n="plan1_name">Все сам</div>
+          <p class="plan-tagline" data-i18n="plan1_tagline">Доступ к залу и программам. Тренер рядом, но ведёшь себя сам.</p>
+          <div class="plan-barbell">
+            <div class="bar"></div><div class="plate"></div>
+            <div class="bar" style="flex:2"></div><div class="plate dim"></div><div class="plate dim"></div><div class="plate dim"></div><div class="plate dim"></div>
+          </div>
+          <div class="plan-price"><span class="amount mono">2 490 ₽</span><span class="period" data-i18n="period_month">/ месяц</span></div>
+          <div class="involvement">
+            <div class="involvement-label"><span data-i18n="involvement_label">Участие тренера</span><span class="pct mono">15%</span></div>
+            <div class="involvement-track"><div class="involvement-fill" data-fill="15"></div></div>
+          </div>
+          <ul class="plan-features">
+            <li data-i18n="plan1_f1">Доступ в студию 24/7</li>
+            <li data-i18n="plan1_f2">Готовые программы в приложении</li>
+            <li data-i18n="plan1_f3">Видео-библиотека упражнений</li>
+            <li data-i18n="plan1_f4">Учёт веса и прогресса</li>
+          </ul>
+          <a href="https://t.me/darya_vishnya" target="_blank" class="plan-cta" data-i18n="plan1_cta">Начать самому</a>
+        </article>
+
+        <article class="plan featured reveal">
+          <span class="plan-badge" data-i18n="plan2_badge">Выбирают чаще всего</span>
+          <div class="plan-name" data-i18n="plan2_name">Вместе</div>
+          <p class="plan-tagline" data-i18n="plan2_tagline">Групповые тренировки с тренером и разбором техники.</p>
+          <div class="plan-barbell">
+            <div class="bar"></div><div class="plate"></div><div class="plate"></div><div class="plate"></div>
+            <div class="bar" style="flex:2"></div><div class="plate dim"></div><div class="plate dim"></div>
+          </div>
+          <div class="plan-price"><span class="amount mono">4 990 ₽</span><span class="period" data-i18n="period_month">/ месяц</span></div>
+          <div class="involvement">
+            <div class="involvement-label"><span data-i18n="involvement_label">Участие тренера</span><span class="pct mono">55%</span></div>
+            <div class="involvement-track"><div class="involvement-fill" data-fill="55"></div></div>
+          </div>
+          <ul class="plan-features">
+            <li data-i18n="plan2_f1">Всё из тарифа «Все сам»</li>
+            <li data-i18n="plan2_f2">Групповые занятия до 8 человек</li>
+            <li data-i18n="plan2_f3">Разбор техники на каждой тренировке</li>
+            <li data-i18n="plan2_f4">Программа под твою цель</li>
+            <li data-i18n="plan2_f5">Чат группы и поддержка</li>
+          </ul>
+          <a href="https://t.me/darya_vishnya" target="_blank" class="plan-cta" data-i18n="plan2_cta">Присоединиться к группе</a>
+        </article>
+
+        <article class="plan reveal">
+          <div class="plan-name" data-i18n="plan3_name">Про тариф</div>
+          <p class="plan-tagline" data-i18n="plan3_tagline">Личный тренер: план, техника, питание и связь каждую неделю.</p>
+          <div class="plan-barbell">
+            <div class="bar"></div><div class="plate"></div><div class="plate"></div><div class="plate"></div><div class="plate"></div><div class="plate"></div>
+            <div class="bar"></div>
+          </div>
+          <div class="plan-price"><span class="amount mono">9 990 ₽</span><span class="period" data-i18n="period_month">/ месяц</span></div>
+          <div class="involvement">
+            <div class="involvement-label"><span data-i18n="involvement_label">Участие тренера</span><span class="pct mono">100%</span></div>
+            <div class="involvement-track"><div class="involvement-fill" data-fill="100"></div></div>
+          </div>
+          <ul class="plan-features">
+            <li data-i18n="plan3_f1">Всё из тарифа «Вместе»</li>
+            <li data-i18n="plan3_f2">Персональные тренировки 1 на 1</li>
+            <li data-i18n="plan3_f3">Индивидуальный план питания</li>
+            <li data-i18n="plan3_f4">Приоритетная запись на удобное время</li>
+            <li data-i18n="plan3_f5">Еженедельный созвон с тренером</li>
+          </ul>
+          <a href="https://t.me/darya_vishnya" target="_blank" class="plan-cta" data-i18n="plan3_cta">Взять личного тренера</a>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band" id="contact">
+    <div class="wrap reveal">
+      <h2 class="display" data-i18n="cta_title">Не знаешь, какой формат твой?</h2>
+      <p data-i18n="cta_sub">Приходи на бесплатную вводную тренировку — подберём тариф по факту, а не на глаз.</p>
+      <a href="https://t.me/darya_vishnya" target="_blank" class="btn-primary" data-i18n="cta_button">Записаться на пробную</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot-row">
+    <p data-i18n="footer_copy">© 2026 Студия «Форма». Сумы, ул. Спортивная, 4.</p>
+    <div class="foot-links">
+      <a href="#" data-i18n="footer_instagram">Instagram</a>
+      <a href="https://t.me/darya_vishnya" target="_blank" data-i18n="footer_telegram">Telegram</a>
+      <a href="#" data-i18n="footer_privacy">Политика конфиденциальности</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const translations = {
+    ru: {
+      doc_title: "ФОРМА — фитнес-студия",
+      nav_format: "Формат", nav_pricing: "Тарифы", nav_contact: "Контакты", nav_cta: "Выбрать тариф",
+      eyebrow: "Студия открыта — Сумы, набор идёт",
+      hero_title: "Тренируйся <em>ровно</em><br>с той поддержкой,<br>что нужна",
+      hero_sub: "От полностью самостоятельных тренировок до тренера на связи каждый день — три формата с разной степенью включённости. Выбираешь не абонемент, а количество внимания к себе.",
+      hero_cta_primary: "Смотреть тарифы",
+      hero_cta_ghost: "Как это устроено →",
+      how_title: "Чем больше блинов на штанге —<br>тем ближе тренер",
+      how_sub: "Все три формата дают доступ к студии и оборудованию. Разница в том, сколько тренерского внимания загружено в тариф — показываем это буквально, весом на грифе.",
+      plate1_title: "Минимум нагрузки на тренера",
+      plate1_desc: "Ты сам решаешь, когда прийти и что делать. Тренер рядом, но не ведёт тебя за руку.",
+      plate2_title: "Общая нагрузка на группу",
+      plate2_desc: "Тренер ведёт занятие для всей группы: следит за техникой, задаёт темп, держит мотивацию.",
+      plate3_title: "Вся нагрузка — на тебя одного",
+      plate3_desc: "Тренер работает только с тобой: план, техника, питание, обратная связь каждую неделю.",
+      pricing_title: "Тарифы",
+      pricing_sub: "Меняй формат в любой момент — прогресс и история тренировок сохраняются.",
+      period_month: "/ месяц",
+      involvement_label: "Участие тренера",
+      plan1_name: "Все сам", plan1_tagline: "Доступ к залу и программам. Тренер рядом, но ведёшь себя сам.",
+      plan1_f1: "Доступ в студию 24/7", plan1_f2: "Готовые программы в приложении", plan1_f3: "Видео-библиотека упражнений", plan1_f4: "Учёт веса и прогресса",
+      plan1_cta: "Начать самому",
+      plan2_badge: "Выбирают чаще всего", plan2_name: "Вместе", plan2_tagline: "Групповые тренировки с тренером и разбором техники.",
+      plan2_f1: "Всё из тарифа «Все сам»", plan2_f2: "Групповые занятия до 8 человек", plan2_f3: "Разбор техники на каждой тренировке", plan2_f4: "Программа под твою цель", plan2_f5: "Чат группы и поддержка",
+      plan2_cta: "Присоединиться к группе",
+      plan3_name: "Про тариф", plan3_tagline: "Личный тренер: план, техника, питание и связь каждую неделю.",
+      plan3_f1: "Всё из тарифа «Вместе»", plan3_f2: "Персональные тренировки 1 на 1", plan3_f3: "Индивидуальный план питания", plan3_f4: "Приоритетная запись на удобное время", plan3_f5: "Еженедельный созвон с тренером",
+      plan3_cta: "Взять личного тренера",
+      cta_title: "Не знаешь, какой формат твой?",
+      cta_sub: "Приходи на бесплатную вводную тренировку — подберём тариф по факту, а не на глаз.",
+      cta_button: "Записаться на пробную",
+      footer_copy: "© 2026 Студия «Форма». Сумы, ул. Спортивная, 4.",
+      footer_instagram: "Instagram", footer_telegram: "Telegram", footer_privacy: "Политика конфиденциальности"
+    },
+    ua: {
+      doc_title: "ФОРМА — фітнес-студія",
+      nav_format: "Формат", nav_pricing: "Тарифи", nav_contact: "Контакти", nav_cta: "Обрати тариф",
+      eyebrow: "Студія відкрита — Суми, набір триває",
+      hero_title: "Тренуйся <em>рівно</em><br>з тією підтримкою,<br>що потрібна",
+      hero_sub: "Від повністю самостійних тренувань до тренера на зв'язку щодня — три формати з різним ступенем залучення. Обираєш не абонемент, а кількість уваги до себе.",
+      hero_cta_primary: "Дивитися тарифи",
+      hero_cta_ghost: "Як це влаштовано →",
+      how_title: "Що більше млинців на штанзі —<br>то ближче тренер",
+      how_sub: "Усі три формати дають доступ до студії та обладнання. Різниця в тому, скільки тренерської уваги закладено у тариф — показуємо це буквально, вагою на грифі.",
+      plate1_title: "Мінімум навантаження на тренера",
+      plate1_desc: "Ти сам вирішуєш, коли прийти і що робити. Тренер поруч, але не веде тебе за руку.",
+      plate2_title: "Спільне навантаження на групу",
+      plate2_desc: "Тренер веде заняття для всієї групи: стежить за технікою, задає темп, тримає мотивацію.",
+      plate3_title: "Все навантаження — на тебе одного",
+      plate3_desc: "Тренер працює тільки з тобою: план, техніка, харчування, зворотний зв'язок щотижня.",
+      pricing_title: "Тарифи",
+      pricing_sub: "Змінюй формат у будь-який момент — прогрес та історія тренувань зберігаються.",
+      period_month: "/ місяць",
+      involvement_label: "Участь тренера",
+      plan1_name: "Все сам", plan1_tagline: "Доступ до залу та програм. Тренер поруч, але керуєш собою сам.",
+      plan1_f1: "Доступ до студії 24/7", plan1_f2: "Готові програми в застосунку", plan1_f3: "Відео-бібліотека вправ", plan1_f4: "Облік ваги та прогресу",
+      plan1_cta: "Почати самому",
+      plan2_badge: "Обирають найчастіше", plan2_name: "Разом", plan2_tagline: "Групові тренування з тренером та розбором техніки.",
+      plan2_f1: "Усе з тарифу «Все сам»", plan2_f2: "Групові заняття до 8 осіб", plan2_f3: "Розбір техніки на кожному тренуванні", plan2_f4: "Програма під твою мету", plan2_f5: "Чат групи та підтримка",
+      plan2_cta: "Приєднатися до групи",
+      plan3_name: "Про тариф", plan3_tagline: "Особистий тренер: план, техніка, харчування і зв'язок щотижня.",
+      plan3_f1: "Усе з тарифу «Разом»", plan3_f2: "Персональні тренування 1 на 1", plan3_f3: "Індивідуальний план харчування", plan3_f4: "Пріоритетний запис на зручний час", plan3_f5: "Щотижневий дзвінок з тренером",
+      plan3_cta: "Взяти особистого тренера",
+      cta_title: "Не знаєш, який формат твій?",
+      cta_sub: "Приходь на безкоштовне вступне тренування — підберемо тариф за фактом, а не на око.",
+      cta_button: "Записатися на пробне",
+      footer_copy: "© 2026 Студія «Форма». Суми, вул. Спортивна, 4.",
+      footer_instagram: "Instagram", footer_telegram: "Telegram", footer_privacy: "Політика конфіденційності"
+    },
+    en: {
+      doc_title: "FORMA — Fitness Studio",
+      nav_format: "Format", nav_pricing: "Pricing", nav_contact: "Contact", nav_cta: "Choose a plan",
+      eyebrow: "Studio open — Sumy, now enrolling",
+      hero_title: "Train with <em>exactly</em><br>the support<br>you need",
+      hero_sub: "From fully independent workouts to a coach on call every day — three formats with different levels of involvement. You're not choosing a membership, you're choosing how much attention you get.",
+      hero_cta_primary: "View plans",
+      hero_cta_ghost: "How it works →",
+      how_title: "The more plates on the bar —<br>the closer the coach",
+      how_sub: "All three formats include access to the studio and equipment. The difference is how much coaching is built into the plan — we show that literally, in weight on the bar.",
+      plate1_title: "Minimum load on the coach",
+      plate1_desc: "You decide when to show up and what to do. The coach is nearby, but doesn't hold your hand.",
+      plate2_title: "Shared load across the group",
+      plate2_desc: "The coach runs the session for the whole group: watches your form, sets the pace, keeps everyone motivated.",
+      plate3_title: "All the focus — on you alone",
+      plate3_desc: "The coach works with only you: plan, technique, nutrition, feedback every week.",
+      pricing_title: "Pricing",
+      pricing_sub: "Switch formats anytime — your progress and training history are saved.",
+      period_month: "/ month",
+      involvement_label: "Coach involvement",
+      plan1_name: "On My Own", plan1_tagline: "Access to the gym and programs. The coach is nearby, but you lead yourself.",
+      plan1_f1: "24/7 studio access", plan1_f2: "Ready-made programs in the app", plan1_f3: "Video library of exercises", plan1_f4: "Weight and progress tracking",
+      plan1_cta: "Start on my own",
+      plan2_badge: "Most popular", plan2_name: "Together", plan2_tagline: "Group training with a coach and form correction.",
+      plan2_f1: "Everything in \"On My Own\"", plan2_f2: "Group sessions up to 8 people", plan2_f3: "Form correction every session", plan2_f4: "Program built around your goal", plan2_f5: "Group chat and support",
+      plan2_cta: "Join the group",
+      plan3_name: "Pro Plan", plan3_tagline: "A personal coach: plan, technique, nutrition, and weekly check-ins.",
+      plan3_f1: "Everything in \"Together\"", plan3_f2: "1-on-1 personal training", plan3_f3: "Individual nutrition plan", plan3_f4: "Priority booking at a convenient time", plan3_f5: "Weekly call with your coach",
+      plan3_cta: "Get a personal coach",
+      cta_title: "Not sure which format is yours?",
+      cta_sub: "Come to a free intro session — we'll match you to a plan based on facts, not guesswork.",
+      cta_button: "Book a trial session",
+      footer_copy: "© 2026 FORMA Studio. Sumy, Sportivna St. 4.",
+      footer_instagram: "Instagram", footer_telegram: "Telegram", footer_privacy: "Privacy Policy"
+    }
+  };
+
+  function applyLang(lang){
+    const dict = translations[lang];
+    if(!dict) return;
+    document.documentElement.lang = lang === 'ua' ? 'uk' : lang;
+    if(dict.doc_title) document.title = dict.doc_title;
+
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if(dict[key] !== undefined) el.textContent = dict[key];
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(el => {
+      const key = el.getAttribute('data-i18n-html');
+      if(dict[key] !== undefined) el.innerHTML = dict[key];
+    });
+
+    document.querySelectorAll('.lang-switch button').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.lang === lang);
+    });
+
+    try{ localStorage.setItem('forma_lang', lang); }catch(e){}
+  }
+
+  document.querySelectorAll('.lang-switch button').forEach(btn => {
+    btn.addEventListener('click', () => applyLang(btn.dataset.lang));
+  });
+
+  let initialLang = 'ru';
+  try{
+    const saved = localStorage.getItem('forma_lang');
+    if(saved && translations[saved]) initialLang = saved;
+  }catch(e){}
+  applyLang(initialLang);
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('in');
+        entry.target.querySelectorAll('.involvement-fill').forEach(el => {
+          el.style.width = el.dataset.fill + '%';
+        });
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
